@@ -21,50 +21,58 @@ function main() {
     // Reflector définition
     let reflector = new Reflector(reflectors['B']);
 
-    to_encode.split("").forEach((character, index) => {
+    to_encode.split("").forEach((character) => {
 
-        if (rotor2.at_notch() && rotor3.at_notch()) {
-            rotor1.shift();
-            rotor2.shift();
-            rotor3.shift();
-        } else if (rotor2.at_notch()) {
-            rotor1.shift();
-            rotor2.shift();
-            rotor3.shift();
-        } else if (rotor3.at_notch()) {
-            rotor2.shift();
-            rotor3.shift();
+        
+        if (/[A-Z]/.test(character)) {
+            if (rotor2.at_notch() && rotor3.at_notch()) {
+                rotor1.shift();
+                rotor2.shift();
+                rotor3.shift();
+            } else if (rotor2.at_notch()) {
+                rotor1.shift();
+                rotor2.shift();
+                rotor3.shift();
+            } else if (rotor3.at_notch()) {
+                rotor2.shift();
+                rotor3.shift();
+            } else {
+                rotor3.shift();
+            }
+            let signal = keyboard.forward(character);
+            signal = plugboard.forward(signal);
+    
+            // First pass from plugboard to rotors
+            signal = rotor3.forward(signal);
+    
+            signal = rotor2.forward(signal);
+    
+            signal = rotor1.forward(signal);
+    
+    
+            // Pass through reflector
+    
+            signal = reflector.reflect(signal);
+    
+            // Second pass from rotors to plugboard
+    
+            signal = rotor1.backward(signal);
+    
+            signal = rotor2.backward(signal);
+    
+            signal = rotor3.backward(signal);
+    
+            signal = plugboard.backward(signal);
+    
+            let encoded_letter = keyboard.backward(signal);
+            encrypted += encoded_letter;
         } else {
-            rotor3.shift();
+            let encoded_letter = character;
+            encrypted += encoded_letter;
         }
 
-        let signal = keyboard.forward(character);
-        signal = plugboard.forward(signal);
-
-        // First pass from plugboard to rotors
-        signal = rotor3.forward(signal);
-
-        signal = rotor2.forward(signal);
-
-        signal = rotor1.forward(signal);
-
-
-        // Pass through reflector
-
-        signal = reflector.reflect(signal);
-
-        // Second pass from rotors to plugboard
-
-        signal = rotor1.backward(signal);
-
-        signal = rotor2.backward(signal);
-
-        signal = rotor3.backward(signal);
-
-        signal = plugboard.backward(signal);
-
-        let encoded_letter = keyboard.backward(signal);
-        encrypted += encoded_letter;
+       
+        
 
 
 
