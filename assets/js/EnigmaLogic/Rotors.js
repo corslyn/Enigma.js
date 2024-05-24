@@ -1,7 +1,6 @@
+import { Statics } from "../Utilities/statics.js";
+
 export class Rotor {
-
-
-
     /**
      * Constructeur permettant de construire un rotor
      * 
@@ -13,7 +12,7 @@ export class Rotor {
          * Si le cablage est : "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
          * Si la lettre à encoder est A, la lettre de sortie sera E
          */
-        this.input = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        this.input = Statics.letters;
         this.output = wiring;
 
         // Walze : 8 rotors disponibles pour M3/M4, 5 rotors pour I
@@ -27,43 +26,40 @@ export class Rotor {
 
     }
 
-
     forward(index) {
         let letter = this.output[index];
         return this.input.indexOf(letter);
-
     }
+
     backward(index) {
         let letter = this.input[index];
         return this.output.indexOf(letter);
-
     }
 
-
-    shift(index = 1) {
-        for (let i = 0; i<index; i++) {
+    shift(starting_position = 0) {
+        for (let i = 0; i < starting_position+1; i++) {
             this.input = this.input.slice(1) + this.input[0];
             this.output = this.output.slice(1) + this.output[0];
         }
-       
+
     }
 
     show() {
-        console.log(this.input);
+        //console.log(this.input);
         console.log(this.output);
     }
 
-    go_to_position(position) {
-        this.shift(this.output.indexOf(position));
+    set_position(letter) {
+        this.input = this.input.slice(this.input.indexOf(letter)) + this.input.slice(0, this.input.indexOf(letter))
+        this.output = this.output.slice(this.input.indexOf(letter)) + this.output.slice(0, this.input.indexOf(letter))
     }
+
+    
 
     at_notch() {
         // Is the rotor at notch position ?
-        //let current_letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[this.position];
+        // let current_letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[this.position];
         // return this.notch.includes(current_letter);
-
-        if (this.output[0] == this.notch) {
-            return true;
-        }
+        return (this.output[0] === this.notch)
     }
 }

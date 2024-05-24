@@ -1,101 +1,66 @@
 import { Rotor } from "./EnigmaLogic/Rotors.js";
 import { Reflector } from "./EnigmaLogic/Reflector.js";
 import { Keyboard } from "./EnigmaLogic/Keyboard.js";
-import { rotors, reflectors, notch, letters } from "./EnigmaLogic/statics.js";
 import { Plugboard } from "./EnigmaLogic/Plugboard.js";
 
+import { Shifter } from "./Utilities/shifterAction.js";
+import { Statics } from "./Utilities/statics.js"
+
+
 function main() {
-    let to_encode = document.getElementById("text").value;
+    // On récupère l'input qui contien le texte a chiffrer
+    let to_encode = document.getElementById("text").value.toUpperCase();
     let encrypted = "";
 
+    // On initialise le keyboard, le plugboard et les différentes rotors
     let keyboard = new Keyboard();
     let plugboard = new Plugboard([]);
 
-    // Rotor définition
     let [rotor1, rotor2, rotor3] = [
-        new Rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q"),
-        new Rotor("AJDKSIRUXBLHWTMCQGZNPYFVOE", "E"),
-        new Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", "V"),
+        new Rotor(Statics.rotors[0], Statics.notch[0]),
+        new Rotor(Statics.rotors[1], Statics.notch[1]),
+        new Rotor(Statics.rotors[2], Statics.notch[2]),
     ];
 
-    // Reflector définition
-    let reflector = new Reflector(reflectors['B']);
+    // On force la position à 1 par défaut
+    rotor1.set_position("A");
+    rotor2.set_position("A");
+    rotor3.set_position("A");
 
-    to_encode.split("").forEach((character) => {
+    let reflector = new Reflector(Statics.reflectors['B']);
 
-        
-        if (/[A-Z]/.test(character)) {
-            if (rotor2.at_notch() && rotor3.at_notch()) {
-                rotor1.shift();
-                rotor2.shift();
-                rotor3.shift();
-            } else if (rotor2.at_notch()) {
-                rotor1.shift();
-                rotor2.shift();
-                rotor3.shift();
-            } else if (rotor3.at_notch()) {
-                rotor2.shift();
-                rotor3.shift();
-            } else {
-                rotor3.shift();
-            }
-            let signal = keyboard.forward(character);
-            signal = plugboard.forward(signal);
-    
-            // First pass from plugboard to rotors
-            signal = rotor3.forward(signal);
-    
-            signal = rotor2.forward(signal);
-    
-            signal = rotor1.forward(signal);
-    
-    
-            // Pass through reflector
-    
-            signal = reflector.reflect(signal);
-    
-            // Second pass from rotors to plugboard
-    
-            signal = rotor1.backward(signal);
-    
-            signal = rotor2.backward(signal);
-    
-            signal = rotor3.backward(signal);
-    
-            signal = plugboard.backward(signal);
-    
-            let encoded_letter = keyboard.backward(signal);
-            encrypted += encoded_letter;
-        } else {
-            let encoded_letter = character;
-            encrypted += encoded_letter;
+    to_encode.split("").forEach(character => {
+        if (! /[A-Z]/.test(character)) {
+            encrypted += character;
+            return;
         }
-
-       
         
+        // Decide what rotor to shift
+        Shifter.shift(rotor1, rotor2, rotor3);
 
 
+        let signal = keyboard.forward(character);
+        signal = plugboard.forward(signal);
 
+        signal = rotor3.forward(signal);
+        signal = rotor2.forward(signal);
+        signal = rotor1.forward(signal);
 
-        //     let character_index = letters.indexOf(character);
+        signal = reflector.reflect(signal);
 
-        //     console.log("[TOUR]", ++i, ", nous travaillons avec la lettre: " + character + "At notch = " + rotor1.at_notch() + "index :" + index);
+        signal = rotor1.backward(signal);
+        signal = rotor2.backward(signal);
+        signal = rotor3.backward(signal);
 
+        signal = plugboard.backward(signal);
 
-
-        //     let scrambled_letter = rotor1.forward(character_index);
-        //     scrambled_letter = rotor2.forward(scrambled_letter);
-        //     scrambled_letter = rotor3.forward(scrambled_letter);
-
-        //     scrambled_letter = reflector.forward(scrambled_letter);
-
-        //     scrambled_letter = rotor3.backward(scrambled_letter);
-        //     scrambled_letter = rotor2.backward(scrambled_letter);
-        //     scrambled_letter = rotor1.backward(scrambled_letter);
-
-
-        //     encrypted += letters[scrambled_letter];
-
+        encrypted += keyboard.backward(signal);
+        // console.log("Rotor 3 ");
+        // rotor3.show();
+        // console.log("Rotor 2 ");
+        // rotor2.show();
+        // console.log("Rotor 1 ");
+        // rotor1.show();
     });
     console.log(encrypted);
     document.getElementById("scrambled").innerHTML = encrypted;

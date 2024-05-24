@@ -1,11 +1,12 @@
+import { Statics } from "../Utilities/statics.js";
+
 export class Keyboard {
+
     forward(letter) {
-        let index = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(letter);
-        return index;
+        return Statics.letters.indexOf(letter);
     }
 
     backward(index) {
-        let letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[index];
-        return letter;
+        return Statics.letters[index];
     }
 }

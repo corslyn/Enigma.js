@@ -1,3 +1,5 @@
+import { Statics } from "../Utilities/statics.js";
+
 export class Reflector {
 
     constructor(wiring) {
@@ -6,7 +8,7 @@ export class Reflector {
          * Si le cablage est : "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
          * Si la lettre à encoder est A, la lettre de sortie sera E
          */
-        this.input = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        this.input = Statics.letters;
         this.output = wiring;
     }
 
