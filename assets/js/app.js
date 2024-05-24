@@ -4,11 +4,13 @@ import { rotors, reflectors, notch, letters } from "./EnigmaLogic/statics.js";
 
 function main() {
     console.clear();
+
     let rotor1 = new Rotor(rotors[0], notch[0], 1);
     let rotor2 = new Rotor(rotors[1], notch[1], 2);
     let rotor3 = new Rotor(rotors[2], notch[2], 3);
 
     let reflector = new Reflector(reflectors['B']);
+    console.log("reflector", reflectors['B']);
 
     rotor1.set_position(0);
     rotor2.set_position(0);
@@ -18,6 +20,7 @@ function main() {
     let encrypted = "";
 
     let i = -1;
+    
     to_encode.split("").forEach((character) => {
         rotor1.shift();
 

@@ -17,7 +17,7 @@ export class Rotor {
 
         // Walze : 8 rotors disponibles pour M3/M4, 5 rotors pour I
         this.rotor_number = rotor_number;
-        // remontre l'erreur
+
         // Die Ringstellung: À quelle lettre il va rotater 0 = A, 25 = Z
         this.notch = notch;
 
@@ -29,11 +29,12 @@ export class Rotor {
     }
 
     forward(letter) {
-        // Plugboard -> Rotors -> Reflector
         // Get normal index
         let inputIndex = (this.normal.indexOf(letter) + this.position - this.ringSetting + 26) % 26;
+
         // Get scrambled letter from index
         let scrambled_letter = this.wiring[inputIndex];
+
         let outputIndex = (this.normal.indexOf(scrambled_letter) - this.position + this.ringSetting + 26) % 26;
 
         return outputIndex;
@@ -59,11 +60,7 @@ export class Rotor {
     at_notch() {
         // Is the rotor at notch position ?
         let currentLetter = this.normal[this.position];
-        if (this.notch.includes(currentLetter)) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.notch.includes(currentLetter)
     }
 
     set_position(pos) {
