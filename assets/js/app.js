@@ -90,6 +90,7 @@ function main() {
 
     });
     console.log(encrypted);
+    document.getElementById("scrambled").innerHTML = encrypted;
 }
 
 window.addEventListener("DOMContentLoaded", () => {

@@ -1,0 +1,70 @@
+* {
+    padding: 0;
+    margin: 0;
+
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+
+    --grey: #222325;
+    --white: #eceee7;
+    --brown: #572714;
+    --clear-brown: #a96128;
+}
+
+body {
+    background-color: var(--grey);
+    color: var(--clear-brown);
+
+    padding-left: 300px;
+    padding-right: 300px;
+    padding-top: 20px;
+}
+
+h1 {
+    font-weight: 600;
+    margin-bottom: 60px;
+}
+
+main input#text {
+    background-color: var(--clear-brown);
+    color: var(--white);
+    border: 5px solid var(--brown);
+    padding: 15px;
+    outline: none;
+    width: 80%;
+    border-radius: 10px;
+}
+
+main button#clickable {
+    background-color: var(--clear-brown);
+    color: var(--white);
+    border: 5px solid var(--brown);
+    width: 14%;
+    padding: 15px;
+    
+    border-radius: 10px;
+
+}
+
+main div#result {
+    background-color: var(--clear-brown);
+    color: var(--white);
+    border: 5px solid var(--brown);
+    width: calc(99% - 4px);
+    
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+main div#result .top {
+    padding: 4px 15px;
+    border-bottom: 5px solid var(--brown);
+    color: #cba98a;
+    font-size: 14px;
+    font-weight: 800;
+    font-style: italic;
+}
+
+main div#result .content {
+    padding: 15px;
+}
