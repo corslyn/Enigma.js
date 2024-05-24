@@ -1,17 +1,18 @@
 export class Reflector {
+
     constructor(wiring) {
-        this.normal = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";;
-        this.wiring = wiring;
+        /**
+         * Cablage du réflecteur:
+         * Si le cablage est : "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
+         * Si la lettre à encoder est A, la lettre de sortie sera E
+         */
+        this.input = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        this.output = wiring;
     }
 
-    forward(letter) {
-        let scrambled_letter = this.wiring[
-                                        this.normal[letter]
-                                ];
-
-        return this.normal.indexOf(scrambled_letter);
+    reflect(index) {
+        let letter = this.output[index];
+        let index_with_rotor = this.input.indexOf(letter);
+        return index_with_rotor;
     }
-
 }
-
-// BABWIN

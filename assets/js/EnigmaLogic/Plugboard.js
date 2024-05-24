@@ -5,6 +5,7 @@ export class Plugboard {
     constructor(pairs) {
         this.input = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         this.output = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        this.mapping = {};
         pairs.forEach(pair => {
             let input_letter = pair[0];
             let output_letter = pair[1];
@@ -12,6 +13,8 @@ export class Plugboard {
             let index_of_output_letter = this.input.indexOf(output_letter);
             this.input = this.input.slice(0, index_of_input_letter) + output_letter + this.output.slice(index_of_input_letter + 1);
             this.input = this.input.slice(0, index_of_output_letter) + input_letter + this.output.slice(index_of_output_letter + 1);
+            // this.mapping[input_letter] = output_letter;
+            // this.mapping[output_letter] = input_letter;
         });
     }
 
