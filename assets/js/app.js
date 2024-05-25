@@ -5,6 +5,7 @@ import { Plugboard } from "./EnigmaLogic/Plugboard.js";
 
 import { Shifter } from "./Utilities/shifterAction.js";
 import { Statics } from "./Utilities/statics.js"
+import { Enigma } from "./EnigmaLogic/Enigma.js";
 
 
 function main() {
@@ -14,55 +15,37 @@ function main() {
 
     // On initialise le keyboard, le plugboard et les différentes rotors
     let keyboard = new Keyboard();
-    let plugboard = new Plugboard([]);
+    let plugboard = new Plugboard(["AR", "GK", "OX"]);
 
     let [rotor1, rotor2, rotor3] = [
         new Rotor(Statics.rotors[0], Statics.notch[0]),
         new Rotor(Statics.rotors[1], Statics.notch[1]),
-        new Rotor(Statics.rotors[2], Statics.notch[2]),
+        new Rotor(Statics.rotors[2], Statics.notch[3]),
     ];
-
-    // On force la position à 1 par défaut
-    rotor1.set_position("A");
-    rotor2.set_position("A");
-    rotor3.set_position("A");
 
     let reflector = new Reflector(Statics.reflectors['B']);
 
+    let enigma = new Enigma(reflector, rotor1, rotor2, rotor3, plugboard, keyboard);
+
+    enigma.set_start_position("FFF");
+    enigma.set_ring_settings((1, 1, 1));
+    console.log(rotor1.input[0]);
+    console.log(rotor2.input[0]);
+    console.log(rotor3.input[0]);
+
+    let i = 0
     to_encode.split("").forEach(character => {
         if (! /[A-Z]/.test(character)) {
             encrypted += character;
             return;
         }
-        
-        // Decide what rotor to shift
+        // Decide which rotor to shift
         Shifter.shift(rotor1, rotor2, rotor3);
-
-
-        let signal = keyboard.forward(character);
-        signal = plugboard.forward(signal);
-
-        signal = rotor3.forward(signal);
-        signal = rotor2.forward(signal);
-        signal = rotor1.forward(signal);
-
-        signal = reflector.reflect(signal);
-
-        signal = rotor1.backward(signal);
-        signal = rotor2.backward(signal);
-        signal = rotor3.backward(signal);
-
-        signal = plugboard.backward(signal);
-
-        encrypted += keyboard.backward(signal);
-        // console.log("Rotor 3 ");
-        // rotor3.show();
-        // console.log("Rotor 2 ");
-        // rotor2.show();
-        // console.log("Rotor 1 ");
-        // rotor1.show();
+        encrypted += enigma.encode(character);
     });
-    console.log(encrypted);
+    console.log(rotor1.input[0]);
+    console.log(rotor2.input[0]);
+    console.log(rotor3.input[0]);
     document.getElementById("scrambled").innerHTML = encrypted;
 }
 

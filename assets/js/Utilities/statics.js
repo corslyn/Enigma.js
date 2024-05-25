@@ -8,8 +8,11 @@ export class Statics {
         //"JPGVOUMFYQBENHZRDKASXLICTW", // Enigma M4
         //"NZJHGRCXMYSWBOUFAIVLPEKQDT", // Enigma M4
         //"FKQHTLXOCBJSPDZRAMEWNIUYGV", // Enigma M4 
+
+
+
     ]
-    
+
     static notch = [
         'Q', // Si on passe de Q à R, le rotor suivant tourne
         'E', // Si on passe de E à F, le rotor suivant tourne
@@ -20,11 +23,11 @@ export class Statics {
         // 7: 'ZM',
         // 8: 'ZM',
     ]
-    
-    static  reflectors = {
-        "A":         "EJMZALYXVBWFCRQUONTSPIKHGD",
-        "B":         "YRUHQSLDPXNGOKMIEBFZCWVJAT",
-        "C":         "FVPJIAOYEDRZXWGCTKUQSBNMHL",
+
+    static reflectors = {
+        "A": "EJMZALYXVBWFCRQUONTSPIKHGD",
+        "B": "YRUHQSLDPXNGOKMIEBFZCWVJAT",
+        "C": "FVPJIAOYEDRZXWGCTKUQSBNMHL",
         // "beta":   "LEYJVCNIXWPBQMDRTAKZGFUHOS", // Enigma M4
         // "gamma":  "FSOKANUERHMBTIYCWLQPZXVGJD", // Enigma M4
         // "B_thin": "ENKQAUYWJICOPBLMDXZVFTHRGS", // Enigma M4
