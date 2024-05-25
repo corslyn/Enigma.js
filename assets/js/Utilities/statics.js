@@ -8,9 +8,6 @@ export class Statics {
         //"JPGVOUMFYQBENHZRDKASXLICTW", // Enigma M4
         //"NZJHGRCXMYSWBOUFAIVLPEKQDT", // Enigma M4
         //"FKQHTLXOCBJSPDZRAMEWNIUYGV", // Enigma M4 
-
-
-
     ]
 
     static notch = [

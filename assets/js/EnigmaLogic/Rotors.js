@@ -55,12 +55,15 @@ export class Rotor {
         // let current_letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[this.position];
         // return this.notch.includes(current_letter);
         console.log("Rotor notch = " + this.notch);
+        // mais a ce moment la vient dans app
         return (this.input[0] === this.notch);
     }
 
     set_ring(pos) {
         this.shift(pos - 1, false);
-        let pos_notch = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(this.notch);
-        this.notch = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[(pos_notch - pos + 1) % 26];
+        let pos_notch = Statics.letters.indexOf(this.notch);
+
+        let value = Statics.letters[(pos_notch - pos + 1) % 26];
+        this.notch = value;
     }
 }

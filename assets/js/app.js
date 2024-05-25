@@ -5,7 +5,7 @@ import { Plugboard } from "./EnigmaLogic/Plugboard.js";
 
 import { Shifter } from "./Utilities/shifterAction.js";
 import { Statics } from "./Utilities/statics.js"
-import { Enigma } from "./EnigmaLogic/Enigma.js";
+import { Enigma } from "./Enigma.js";
 
 
 function main() {
@@ -20,20 +20,19 @@ function main() {
     let [rotor1, rotor2, rotor3] = [
         new Rotor(Statics.rotors[0], Statics.notch[0]),
         new Rotor(Statics.rotors[1], Statics.notch[1]),
-        new Rotor(Statics.rotors[2], Statics.notch[3]),
+        new Rotor(Statics.rotors[2], Statics.notch[2]),
     ];
 
     let reflector = new Reflector(Statics.reflectors['B']);
 
     let enigma = new Enigma(reflector, rotor1, rotor2, rotor3, plugboard, keyboard);
 
-    enigma.set_start_position("FFF");
-    enigma.set_ring_settings((1, 1, 1));
+    enigma.set_start_position("AAA");
+    enigma.set_ring_settings([1, 1, 1]);
     console.log(rotor1.input[0]);
     console.log(rotor2.input[0]);
     console.log(rotor3.input[0]);
 
-    let i = 0
     to_encode.split("").forEach(character => {
         if (! /[A-Z]/.test(character)) {
             encrypted += character;
